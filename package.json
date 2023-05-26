@@ -1,27 +1,42 @@
 {
-  "name": "hiring-api",
-  "version": "1.0.0",
-  "description": "api de vagas",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "npx tsc",
-    "start": "node build/main/index.js",
-    "dev": "concurrently \"npx tsc --watch\" \"nodemon -q build/main/index.js\""
-  },
-  "author": "mateusppereira",
-  "license": "ISC",
-  "dependencies": {
-    "express": "^4.18.2",
-    "pg": "^8.11.0",
-    "typeorm": "^0.3.16",
-    "uuid": "^9.0.0"
-  },
-  "devDependencies": {
-    "@types/express": "^4.17.17",
-    "@types/node": "^20.2.3",
-    "concurrently": "^8.0.1",
-    "nodemon": "^2.0.22",
-    "typescript": "^5.0.4"
-  }
+    "name": "hiring-api",
+    "version": "1.0.0",
+    "description": "api de vagas",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "build": "npx tsc",
+        "start": "node build/main/index.js",
+        "dev": "concurrently \"npx tsc --watch\" \"nodemon -q build/main/index.js\"",
+        "devJam": "ts-node-dev --respawn --transpile-only src/index.ts",
+        "typeorm": "typeorm-ts-node-commonjs",
+        "Ecreate": "npm run typeorm entity:create src/app/shared/database/entites/",
+        "Mcreate": "npm run typeorm migration:create src/app/shared/database/migrations/",
+        "Mgenerate": "npm run typeorm migration:generate -- -d ./src/main/config/typeorm.config.ts",
+        "Mrun": "npm run typeorm migration:run -- -d src/main/config/typeorm.config.ts",
+        "Mrevert": "npm run typeorm migration:revert -- -d src/main/config/typeorm.config.ts",
+        "Mshow": "npm run typeorm migration:show -- -d src/main/config/typeorm.config.ts"
+    },
+    "author": "mateusppereira",
+    "license": "ISC",
+    "dependencies": {
+        "cors": "^2.8.5",
+        "dotenv": "^16.0.3",
+        "express": "^4.18.2",
+        "pg": "^8.11.0",
+        "reflect-metadata": "^0.1.13",
+        "typeorm": "^0.3.16",
+        "uuid": "^9.0.0"
+    },
+    "devDependencies": {
+        "@types/dotenv": "^8.2.0",
+        "@types/express": "^4.17.17",
+        "@types/node": "^20.2.3",
+        "@types/pg": "^8.6.6",
+        "@types/uuid": "^9.0.1",
+        "concurrently": "^8.0.1",
+        "nodemon": "^2.0.22",
+        "ts-node": "^10.9.1",
+        "typescript": "^5.0.4"
+    }
 }
