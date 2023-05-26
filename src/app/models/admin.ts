@@ -10,7 +10,6 @@ export class Admin extends User {
             uuid: this.uuid,
             name: this.name,
             email: this.email,
-            password: this.password,
             company: this.companyName,
         };
     }

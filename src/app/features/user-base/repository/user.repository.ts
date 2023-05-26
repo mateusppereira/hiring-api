@@ -18,11 +18,24 @@ export class UserBaseRepository {
         return UserBaseRepository.mapEntityModel(result);
     }
 
+    public async listAll() {
+        const result = await this.repository.find();
+        return result.map((user) => UserBaseRepository.mapEntityModel(user));
+    }
+
     public async list(tipo?: UserType) {
         const result = await this.repository.findBy({
             tipo,
         });
         return result.map((user) => UserBaseRepository.mapEntityModel(user));
+    }
+    public async findUser(name: string, email: string) {
+        const result = await this.repository.findOneBy({
+            name,
+            email,
+        });
+        if (!result) return null;
+        return UserBaseRepository.mapEntityModel(result);
     }
 
     public async getByUUID(uuid: string) {

@@ -14,7 +14,7 @@ export class VacantCandidateEntity {
     dtCadastre: Date;
 
     @Column({ name: 'vacant_candidate_indSuccess', default: false })
-    indSuccess?: boolean;
+    indSuccess: boolean;
 
     @Column({ name: 'vacant_candidate_uuid_candidate' })
     uuidCandidate?: string;

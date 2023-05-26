@@ -7,22 +7,22 @@ export class VacancyEntity {
     uuid: string;
 
     @Column({ name: 'vacancy_description' })
-    description?: string;
+    description: string;
 
     @Column({ name: 'vacancy_company_name' })
-    companyName?: string;
+    companyName: string;
 
     @Column({ name: 'vacancy_dtLimite' })
-    dtLimite?: Date;
+    dtLimite: Date;
 
     @Column({ name: 'vacancy_indActive', default: true })
-    indActive?: boolean;
+    indActive: boolean;
 
     @Column({ name: 'vacancy_max_candidates', nullable: true })
-    maxCandidates?: number;
+    maxCandidates: number;
 
     @Column({ name: 'vacancy_uuid_recruiter' })
-    uuidRecruiter?: string;
+    uuidRecruiter: string;
 
     @ManyToOne(() => UserEntity)
     @JoinColumn({ name: 'uuidRecruiter' })

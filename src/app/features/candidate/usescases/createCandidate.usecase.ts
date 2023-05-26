@@ -1,25 +1,24 @@
-import { Admin } from '../../../models/admin';
+import { Candidate } from '../../../models/candidate';
 import { Return } from '../../../shared/utils/return.contract';
 import { UserBaseRepository } from '../../user-base/repository/user.repository';
 
-interface CreatedAdminDTO {
+interface CreatedCandidateDTO {
     name: string;
     email: string;
     password: string;
-    companyName?: string;
 }
 
-export class CreateAdminUseCase {
+export class CreateCandidateUseCase {
     constructor(private repository: UserBaseRepository) {}
 
-    public async execute(data: CreatedAdminDTO): Promise<Return> {
-        const admin = new Admin(data.name, data.email, data.password, data.companyName);
+    public async execute(data: CreatedCandidateDTO): Promise<Return> {
+        const admin = new Candidate(data.name, data.email, data.password);
         const result = await this.repository.create(admin);
         return {
             ok: true,
             code: 201,
-            message: 'Admin successfully created',
-            data: (result as Admin).toJsonAdmin(),
+            message: 'Candidate successfully created',
+            data: result.toJson(),
         };
     }
 }

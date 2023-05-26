@@ -1,5 +1,5 @@
 import { DatabaseConnection } from './database/database.connection';
-import { runServer } from './server/server';
+import { runServer } from './server/express.server';
 
 DatabaseConnection.connect()
     .then(() => runServer())
