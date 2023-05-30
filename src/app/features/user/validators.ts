@@ -1,4 +1,4 @@
-
+import { ValidationError } from "../../shared/exceptions/validationError";
 
 export const validateCreateUser = (params: any) => {
   const { name, email, senha, tipo, nomeEmpresa } = params;
@@ -13,4 +13,16 @@ export const validateCreateUser = (params: any) => {
   // if (typeof nomeEmpresa !== 'string') throw Error('Nome empresa inválido');
 
   return { name, email, senha, tipo, nomeEmpresa };
+}
+
+export const validateUsersFilter = (params: any) => {
+  const { tipo } = params;
+
+  if (tipo !== 'candidato' &&
+      tipo !== 'admin' &&
+      tipo !== 'recrutador' &&
+      tipo !== undefined)
+    throw new ValidationError('Tipo inválido');
+
+  return { tipo };
 }

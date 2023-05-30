@@ -1,12 +1,14 @@
 import { User } from "../../../models/user";
 import { UserRepository } from "../repository";
 
+export type UserTipo = 'candidato' | 'admin' | 'recrutador';
+
 export interface UserToCreateDTO {
   name: string
   email: string
   senha: string
   nomeEmpresa?: string
-  tipo: 'candidato' | 'admin' | 'recrutador'
+  tipo: UserTipo
 }
 
 export class CreateUserUsecase {
