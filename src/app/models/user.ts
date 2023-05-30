@@ -8,6 +8,10 @@ export class User {
     private tipo?: 'candidato' | 'admin' | 'recrutador',
   ) { }
 
+  isAdmin(): Boolean {
+    return this.tipo === 'admin';
+  }
+
   toJson(): User {
     return new User(
       this.uuid,
