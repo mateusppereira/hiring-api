@@ -1,23 +1,27 @@
 import { Request, Response } from "express";
-import { UserRepository } from "./repository";
-import { validateCreateUser, validateUsersFilter } from "./validators";
-import { CreateUserUsecase } from "./usecases/createUserUsecase";
-import { ValidationError } from "../../shared/exceptions/validationError";
-import { ListUsersUsecase } from "./usecases/listUsersUsecase";
-import { FindUserUsecase } from "./usecases/findUserUsecase";
+import { ForbiddenError } from "../../shared/exceptions/forbiddenError";
 import { NotFoundError } from "../../shared/exceptions/notFoundError";
+import { ValidationError } from "../../shared/exceptions/validationError";
+import { UserRepository } from "./repository";
+import { CreateUserUsecase } from "./usecases/createUserUsecase";
+import { FindUserUsecase } from "./usecases/findUserUsecase";
+import { ListUsersUsecase } from "./usecases/listUsersUsecase";
+import { validateCreateUser, validateUsersFilter } from "./validators";
 
 export const createUserController = async (req: Request, res: Response) => {
   try {
+    const { authenticatedUser } = req.body;
     const userToCreate = validateCreateUser(req.body);
 
     const userRepository = new UserRepository();
     const createUserUsecase = new CreateUserUsecase(userRepository);
-    const createdUser = await createUserUsecase.execute(userToCreate);
+    const createdUser = await createUserUsecase.execute(userToCreate, authenticatedUser);
 
     return res.status(201).send(createdUser);
   } catch (error) {
-    console.log(error);
+    if (error instanceof ForbiddenError) {
+     return error.respond(res);
+    }
     return res.status(500).send({});
   }
 }
