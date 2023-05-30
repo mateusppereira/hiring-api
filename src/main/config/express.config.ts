@@ -1,12 +1,11 @@
-import express, { Express, } from 'express';
-import { registerRoutes } from './httpRoutes.config';
+import express, { Express } from 'express';
+import cookieParser from 'cookie-parser';
+import cors from 'cors';
 
 export const createServer = () => {
-  const app: Express = express();
+    const app: Express = express();
 
-  app.use(express.json());
+    app.use(cors(), express.json(), cookieParser());
 
-  registerRoutes(app);
-
-  return app;
-}
+    return app;
+};
