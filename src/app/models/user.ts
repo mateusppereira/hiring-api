@@ -7,4 +7,15 @@ export class User {
     private nomeEmpresa?: string,
     private tipo?: 'candidato' | 'admin' | 'recrutador',
   ) { }
+
+  toJson(): User {
+    return new User(
+      this.uuid,
+      this.name,
+      this.email,
+      undefined,
+      this.nomeEmpresa,
+      this.tipo,
+    );
+  }
 }

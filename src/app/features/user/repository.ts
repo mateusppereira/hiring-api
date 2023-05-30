@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { DatabaseConnection } from "../../../main/database";
 import { User } from "../../models/user";
 import { UserEntity } from "../../shared/database/entites/user.entity";
-import { UserToCreateDTO } from "./usecases/createUserUsecase";
+import { UserTipo, UserToCreateDTO } from "./usecases/createUserUsecase";
 
 export class UserRepository {
   private userRepository: Repository<UserEntity>;
@@ -18,13 +18,27 @@ export class UserRepository {
       ...userToCreate
     });
 
+    return UserRepository.entityToModel(createdUser);
+  }
+
+  async listUsers(filter: Partial<UserEntity>) : Promise<User[]> {
+    const usersFound = await this.userRepository.findBy(filter);
+    return usersFound.map((userEntity) => UserRepository.entityToModel(userEntity));
+  }
+
+  async find(uuid: string) : Promise<User | null> {
+    const userFound = await this.userRepository.findOneBy({ uuid });
+    return userFound && UserRepository.entityToModel(userFound);
+  }
+
+  private static entityToModel(userEntity: UserEntity) {
     return new User(
-      createdUser.uuid,
-      createdUser.name,
-      createdUser.email,
-      createdUser.senha,
-      createdUser.nomeEmpresa,
-      createdUser.tipo,
+      userEntity.uuid,
+      userEntity.name,
+      userEntity.email,
+      userEntity.senha,
+      userEntity.nomeEmpresa,
+      userEntity.tipo as UserTipo,
     );
   }
 }

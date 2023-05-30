@@ -1,8 +1,11 @@
 import { Request, Response } from "express";
 import { UserRepository } from "./repository";
-import { validateCreateUser } from "./validators";
+import { validateCreateUser, validateUsersFilter } from "./validators";
 import { CreateUserUsecase } from "./usecases/createUserUsecase";
-
+import { ValidationError } from "../../shared/exceptions/validationError";
+import { ListUsersUsecase } from "./usecases/listUsersUsecase";
+import { FindUserUsecase } from "./usecases/findUserUsecase";
+import { NotFoundError } from "../../shared/exceptions/notFoundError";
 
 export const createUserController = async (req: Request, res: Response) => {
   try {
@@ -15,6 +18,43 @@ export const createUserController = async (req: Request, res: Response) => {
     return res.status(201).send(createdUser);
   } catch (error) {
     console.log(error);
+    return res.status(500).send({});
+  }
+}
+
+export const listUsersController = async (req: Request, res: Response) => {
+  try {
+    const usersFilter = validateUsersFilter(req.query);
+
+    const userRepository = new UserRepository();
+    const listUsersUsecase = new ListUsersUsecase(userRepository);
+    const usersFound = await listUsersUsecase.execute(usersFilter);
+
+    return res.status(200).send(usersFound);
+  } catch (error) {
+    if (error instanceof ValidationError) {
+      return error.respond(res);
+    }
+    return res.status(500).send({});
+  }
+}
+
+export const findUserController = async (req: Request, res: Response) => {
+  try {
+    if (!req.params.uuid) throw new ValidationError('UUID não informado');
+
+    const userRepository = new UserRepository();
+    const findUserUsecase = new FindUserUsecase(userRepository);
+    const userFound = await findUserUsecase.execute(req.params.uuid);
+
+    if (!userFound) throw new NotFoundError('Usuário não encontrado');
+
+    return res.status(200).send(userFound);
+  } catch (error) {
+    if (error instanceof ValidationError ||
+        error instanceof NotFoundError) {
+      return error.respond(res);
+    }
     return res.status(500).send({});
   }
 }
