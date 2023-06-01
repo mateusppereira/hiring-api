@@ -1,11 +1,10 @@
 import { Request, Response } from "express";
-import { NotFoundError } from "../../shared/exceptions/notFoundError";
+import jwt from 'jsonwebtoken';
+import { handleControllerError } from "../../shared/exceptions";
 import { UnauthorizedError } from "../../shared/exceptions/unauthorizedError";
-import { ValidationError } from "../../shared/exceptions/validationError";
 import { UserRepository } from "../user/repository";
 import { LoginUsecase } from "./loginUsecase";
 import { validateLoginData } from "./validator";
-import jwt from 'jsonwebtoken';
 
 export const loginController = async (req: Request, res: Response) => {
   try {
@@ -24,11 +23,6 @@ export const loginController = async (req: Request, res: Response) => {
 
     return res.status(200).send({ token });
   } catch (error) {
-    if (error instanceof ValidationError ||
-        error instanceof NotFoundError ||
-        error instanceof UnauthorizedError) {
-      return error.respond(res);
-    }
-    return res.status(500).send({});
+    handleControllerError(error, res);
   }
 }

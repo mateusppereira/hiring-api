@@ -12,6 +12,14 @@ export class User {
     return this.tipo === 'admin';
   }
 
+  isRecrutador(): Boolean {
+    return this.tipo === 'recrutador';
+  }
+
+  getUuid(): string {
+    return this.uuid as string;
+  }
+
   toJson(): User {
     return new User(
       this.uuid,
