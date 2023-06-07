@@ -7,5 +7,5 @@ export class NotFoundError extends Error {
 
   respond(res: Response) {
     return res.status(404).send({ message: this.message });
-  } 
+  }
 }
