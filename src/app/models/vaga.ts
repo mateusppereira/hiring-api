@@ -7,6 +7,6 @@ export class Vaga {
     private ativo: boolean,
     private dataLimite: string,
     private recrutadorUuid: string,
-    private maxCandidatos?: string,
+    private maxCandidatos?: number,
   ) {}
 }

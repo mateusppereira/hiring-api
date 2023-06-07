@@ -7,6 +7,7 @@ import { CreateUserUsecase } from "./usecases/createUserUsecase";
 import { FindUserUsecase } from "./usecases/findUserUsecase";
 import { ListUsersUsecase } from "./usecases/listUsersUsecase";
 import { validateCreateUser, validateUsersFilter } from "./validators";
+import { handleControllerError } from "../../shared/exceptions";
 
 export const createUserController = async (req: Request, res: Response) => {
   try {
@@ -19,10 +20,7 @@ export const createUserController = async (req: Request, res: Response) => {
 
     return res.status(201).send(createdUser);
   } catch (error) {
-    if (error instanceof ForbiddenError) {
-     return error.respond(res);
-    }
-    return res.status(500).send({});
+    handleControllerError(error, res);
   }
 }
 
@@ -36,10 +34,7 @@ export const listUsersController = async (req: Request, res: Response) => {
 
     return res.status(200).send(usersFound);
   } catch (error) {
-    if (error instanceof ValidationError) {
-      return error.respond(res);
-    }
-    return res.status(500).send({});
+    handleControllerError(error, res);
   }
 }
 
@@ -55,10 +50,6 @@ export const findUserController = async (req: Request, res: Response) => {
 
     return res.status(200).send(userFound);
   } catch (error) {
-    if (error instanceof ValidationError ||
-        error instanceof NotFoundError) {
-      return error.respond(res);
-    }
-    return res.status(500).send({});
+    handleControllerError(error, res);
   }
 }
