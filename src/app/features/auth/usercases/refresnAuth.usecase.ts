@@ -2,7 +2,7 @@ import { JwtAdapter } from '../../../shared/utils/jwt.adapter';
 import { Return } from '../../../shared/utils/return.contract';
 import { AuthRepository } from '../repository/auth.repository';
 
-interface CheckLoginDTO {
+export interface CheckLoginDTO {
     uuid: string;
     name: string;
     email: string;
