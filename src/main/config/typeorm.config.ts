@@ -8,8 +8,9 @@ import { CreatedTables1685061043533 } from '../../app/shared/database/migrations
 import { WhiteListEntity } from '../../app/shared/database/entites/whiteList.entity';
 import { BlackListEntity } from '../../app/shared/database/entites/blackList.entity';
 import { TokenTable1685461975711 } from '../../app/shared/database/migrations/1685461975711-tokenTable';
+import { TestMigration1686789013354 } from '../../../tests/app/shared/migrations/1686789013354-TestMigration';
 
-export const config: DataSourceOptions = {
+let config: DataSourceOptions = {
     type: 'postgres',
     url: appEnv.db,
     logging: true,
@@ -19,4 +20,22 @@ export const config: DataSourceOptions = {
     migrations: [TokenTable1685461975711], //[CreatedTables1685061043533],
 };
 
+if (process.env.NODE_ENV === 'test') {
+    config = {
+        type: 'sqlite',
+        database: './dbtest.sqlite',
+        logging: true,
+        synchronize: false,
+        entities: [
+            UserEntity,
+            VacancyEntity,
+            VacantCandidateEntity,
+            WhiteListEntity,
+            BlackListEntity,
+        ],
+        migrations: [TestMigration1686789013354],
+    };
+}
+
 export const dataSource = new DataSource(config);
+export { config };

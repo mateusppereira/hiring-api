@@ -16,7 +16,7 @@ export class AdminSeeksAllUsersUseCase {
         }
         return {
             ok: true,
-            data: result.map((user) => user.toJson()),
+            data: result,
             code: 200,
             message: 'Successfully created list of users!',
         };

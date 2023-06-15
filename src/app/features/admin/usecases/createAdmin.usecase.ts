@@ -19,7 +19,7 @@ export class CreateAdminUseCase {
             ok: true,
             code: 201,
             message: 'Admin successfully created',
-            data: (result as Admin).toJsonAdmin(),
+            data: result,
         };
     }
 }
