@@ -8,10 +8,10 @@ export const adminRoutes = () => {
 
     router.post(
         '/',
-        [checkIfIsAdminValidator, checksIfItDoesNotDuplicateUserRecordsValidator],
+        [checksIfItDoesNotDuplicateUserRecordsValidator],
         new AdminController().create
     );
-    router.get('/', checkIfIsAdminValidator, new AdminController().findAll);
+    router.get('/', new AdminController().findAll);
 
     return router;
 };

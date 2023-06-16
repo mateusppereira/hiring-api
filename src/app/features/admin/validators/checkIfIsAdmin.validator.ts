@@ -4,7 +4,8 @@ import { badRequestError, serverError } from '../../../shared/utils/helpers';
 
 export const checkIfIsAdminValidator = (req: Request, res: Response, next: NextFunction) => {
     try {
-        const user = JSON.parse(req.headers['user']?.toString() ?? '{}');
+        const user = JSON.parse(req.headers['Authorization']?.toString() ?? '{}');
+        console.log('header', user);
 
         if (user.tipo !== UserType.Admin) {
             return badRequestError(res, 'Unauthorized access to this profile', 405);
