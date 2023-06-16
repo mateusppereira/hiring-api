@@ -1,5 +1,5 @@
 services:
-    - type: web
+    - type: Web Services
       name: hiring-api
       runtime: node
       buildCommand: npm i && npx tsc
