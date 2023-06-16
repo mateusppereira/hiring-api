@@ -15,4 +15,4 @@ services:
             value: 'redis://red-ci50j9dgkuvj7bk5el10:6379'
           - key: PORT
             value: 8081
-      plan: starter
+      plan: Individual
