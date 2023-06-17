@@ -7,7 +7,7 @@
         "build": "npx tsc",
         "start": "node dist/main/index.js",
         "dev": "concurrently \"npx tsc --watch\" \"nodemon -q build/main/index.js\"",
-        "devJam": "ts-node-dev --respawn --transpile-only src/index.ts",
+        "devJam": "ts-node-dev --respawn --transpile-only src/main/index.ts",
         "typeorm": "typeorm-ts-node-commonjs",
         "Ecreate": "npm run typeorm entity:create src/app/shared/database/entites/",
         "Mcreate": "npm run typeorm migration:create src/app/shared/database/migrations/",
