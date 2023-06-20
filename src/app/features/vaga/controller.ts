@@ -1,11 +1,10 @@
 import { Request, Response } from "express";
+import { User } from "../../models/user";
 import { handleControllerError } from "../../shared/exceptions";
+import { UnauthorizedError } from "../../shared/exceptions/unauthorizedError";
 import { VagaRepository } from "./repository";
 import { CreateVagaUsecase } from "./usecases/createVagaUsecase";
 import { validateCreateVaga } from "./validators";
-import { UnauthorizedError } from "../../shared/exceptions/unauthorizedError";
-import { ForbiddenError } from "../../shared/exceptions/forbiddenError";
-import { User } from "../../models/user";
 
 export const listVagasController = async (req: Request, res: Response) => {
   try {

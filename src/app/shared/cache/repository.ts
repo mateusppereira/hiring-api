@@ -31,16 +31,4 @@ export class CacheRepository {
   async invalidate(key: string): Promise<void> {
     await this.cache.del(key);
   }
-
-  async setObj(key: string, value: Object): Promise<void> {
-    await this.cache.hset(key, value);
-  }
-
-  async getObj(key: string): Promise<any> {
-    return this.cache.hgetall(key);
-  }
-
-  async getObjField(key: string, field: string): Promise<any> {
-    return this.cache.hget(key, field);
-  }
 }

@@ -11,5 +11,6 @@ export const handleControllerError = (error: any, res: Response) => {
       error instanceof ForbiddenError) {
     return error.respond(res);
   }
+  console.log('Unhandled error', error);
   return res.status(500).send({});
 }
