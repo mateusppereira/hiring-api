@@ -29,7 +29,7 @@ export const cacheKeyForObject = (prefix: string, object: Object): string => {
 }
 
 export const invalidateCacheByPrefix = async (prefix: string, cacheRepository: CacheRepository) => {
-  const keysToInvalidate = cacheKeysByPrefix[prefix].map((hashed) => `${prefix}-${hashed}`);
+  const keysToInvalidate = (cacheKeysByPrefix[prefix] || []).map((hashed) => `${prefix}-${hashed}`);
   console.log('[cache] invalidating cache for ', keysToInvalidate.join(','));
   const invalidatePromises = keysToInvalidate.map((key) => cacheRepository.invalidate(key));
   await Promise.all(invalidatePromises);
