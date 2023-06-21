@@ -6,7 +6,6 @@ import { UnauthorizedError } from "../exceptions/unauthorizedError";
 export const isRecrutadorMiddleware = (req: Request, res: Response, next: NextFunction) => {
   try {
     const { authenticatedUser } = req.body;
-    console.log(authenticatedUser)
     if (!authenticatedUser) throw new UnauthorizedError('Usuário não autenticado');
     if (!authenticatedUser.isRecrutador()) throw new ForbiddenError('Somente recrutadores podem criar vagas');
 

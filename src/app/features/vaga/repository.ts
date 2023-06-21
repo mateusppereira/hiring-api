@@ -15,6 +15,13 @@ export class VagaRepository {
     return this.vagaRepository.find();
   }
 
+  async find(uuid: string) : Promise<Vaga | null> {
+    const vagaFound = await this.vagaRepository.findOne({ where: { uuid } });
+    return vagaFound
+      ? VagaRepository.entityToModel(vagaFound)
+      : null;
+  }
+
   async create(vagaToCreate: Partial<VagaEntity>) : Promise<Vaga> {
     const vagaCreated = await this.vagaRepository.save({
       uuid: uuidv4(),
