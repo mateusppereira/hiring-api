@@ -20,8 +20,8 @@ export class AdminController {
     public async findAll(req: Request, res: Response) {
         try {
             const usecase = new AdminSeeksAllUsersUseCase(
-                new UserBaseRepository(),
-                new CacheRepository()
+                new UserBaseRepository()
+                // new CacheRepository()
             );
             const result = await usecase.execute();
 

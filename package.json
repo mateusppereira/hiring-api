@@ -25,7 +25,10 @@
         "test:integration": "cross-env NODE_ENV=test jest -c jest.integration.config.ts --silent --noStackTrace --runInBand",
         "test:integration:verbose": "cross-env NODE_ENV=test jest -c jest.integration.config.ts --verbose --runInBand --detectOpenHandles",
         "test:integration:coverage": "cross-env NODE_ENV=test jest -c jest.integration.config.ts --silent --noStackTrace --runInBand --coverage",
-        "test:integration:watch": "cross-env NODE_ENV=test jest -c jest.integration.config.ts --silent --noStackTrace --runInBand --watchAll"
+        "test:integration:watch": "cross-env NODE_ENV=test jest -c jest.integration.config.ts --silent --noStackTrace --runInBand --watchAll",
+        "test:verbose": "cross-env NODE_ENV=test jest --silent --verbose --runInBand --detectOpenHandles",
+        "test:coverage": "cross-env NODE_ENV=test jest  --silent --noStackTrace --runInBand --coverage",
+        "test:watch": "cross-env NODE_ENV=test jest  --silent --noStackTrace --runInBand --watchAll"
     },
     "author": "mateusppereira",
     "license": "ISC",

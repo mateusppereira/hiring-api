@@ -2,6 +2,7 @@ import { randomUUID } from 'node:crypto';
 import { AdminSeeksAllUsersUseCase } from '../../../../../src/app/features/admin/usecases/adminSeeksAllUsers.usecase';
 import { UserBaseRepository } from '../../../../../src/app/features/user-base/repository/user.repository';
 import { UserType } from '../../../../../src/app/models/user';
+import { CacheRepository } from '../../../../../src/app/shared/database/cache-repository';
 
 describe('AdminSeeksAllUsersUseCase test', () => {
     beforeEach(() => jest.clearAllMocks());
@@ -10,9 +11,13 @@ describe('AdminSeeksAllUsersUseCase test', () => {
         const userRepositoryMock = {
             listAll: jest.fn().mockResolvedValue(null),
         };
+        // const cacheMock = {
+        //     get: jest.fn().mockResolvedValue(null),
+        // };
 
         const adminSeeksAllUsersUseCase = new AdminSeeksAllUsersUseCase(
             userRepositoryMock as unknown as UserBaseRepository
+            // cacheMock as unknown as CacheRepository
         );
 
         const result = await adminSeeksAllUsersUseCase.execute();
@@ -56,8 +61,14 @@ describe('AdminSeeksAllUsersUseCase test', () => {
             listAll: jest.fn().mockResolvedValue(userList),
         };
 
+        // const cacheMock = {
+        //     get: jest.fn().mockResolvedValue(null),
+        //     set: jest.fn().mockResolvedValue(userList),
+        // };
+
         const adminSeeksAllUsersUseCase = new AdminSeeksAllUsersUseCase(
             userRepositoryMock as unknown as UserBaseRepository
+            // cacheMock as unknown as CacheRepository
         );
 
         const result = await adminSeeksAllUsersUseCase.execute();

@@ -11,7 +11,7 @@ export const adminRoutes = () => {
         [checksIfItDoesNotDuplicateUserRecordsValidator],
         new AdminController().create
     );
-    router.get('/', new AdminController().findAll);
+    router.get('/all', new AdminController().findAll);
 
     return router;
 };

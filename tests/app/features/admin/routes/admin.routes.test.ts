@@ -1,18 +1,20 @@
-import { createServer } from './../../../../../src/main/config/express.config';
-
-import { DatabaseConnection } from '../../../../../src/main/database/database.connection';
 import request from 'supertest';
+import { createServer } from './../../../../../src/main/config/express.config';
+import redis, { Redis } from 'ioredis';
+import { DatabaseConnection } from '../../../../../src/main/database/database.connection';
 import { randomUUID } from 'node:crypto';
+import { appEnv } from '../../../../../src/app/envs/app.env';
+
 describe('teste das rotas Admin', () => {
     let server: Express.Application | undefined = undefined;
+    // let redisConnection: Redis | null;
     beforeAll(async () => {
         await DatabaseConnection.connect();
-        // se tiver cache do redis tem que iniciar a conexão também
+        // redisConnection = new redis({ path: appEnv.dbRedis });
         server = createServer();
     });
     afterAll(async () => {
         await DatabaseConnection.disconnect();
-        // se tiver cache do redis tem que terminar a conexão também
         server = undefined;
     });
 
@@ -34,8 +36,6 @@ describe('teste das rotas Admin', () => {
             companyName: 'UOL',
         });
 
-        console.log(result);
-
         expect(result.statusCode).toEqual(400);
         expect(result.ok).toBeFalsy();
         expect(result.body.message).toBe(`User BossMaster já está cadastrado`);
@@ -50,20 +50,19 @@ describe('teste das rotas Admin', () => {
                 companyName: 'UOL',
             });
 
-        console.log(result);
-
         expect(result.statusCode).toEqual(201);
         expect(result.ok).toBeTruthy();
         // expect(result.body.data).toBe(`User BossMaster já está cadastrado`);
     });
     test('deve retornar 200 ao listar usuarios', async () => {
-        await request(server)
-            .get('/admin')
-            .expect((response) => {
-                console.log(response.body.data);
-                expect(response.status).toEqual(200);
-            });
+        const result = await request(server).get('/admin/all');
 
-        // expect(result.body.data).toBe(`User BossMaster já está cadastrado`);
+        expect(result.ok).toBeTruthy();
+        expect(result.statusCode).toEqual(200);
+        expect(result.error).toBeFalsy();
+        expect(result.type).toEqual('application/json');
+        expect(result.charset).toEqual('utf-8');
+        expect(result.body.message).toEqual('Successfully created list of users!');
+        expect(result.body.data).toBeDefined();
     });
 });
