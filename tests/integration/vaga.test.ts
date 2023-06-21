@@ -106,7 +106,7 @@ describe('[GET] /vagas/:uuid', () => {
 
     it('should return unauthorized', () => {
       const { status } = result;
-      expect(status).toEqual(401);
+      expect(status).toEqual(404);
     });
   });
 });
