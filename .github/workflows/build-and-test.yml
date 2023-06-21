@@ -19,4 +19,7 @@ jobs:
       - name: Build app
         run: npm run build
       - name: Run tests
+        env:
+          MY_SECRET_KEY_JWT: chave-de-teste
+          NODE_ENV: test
         run: npm run test
