@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import jwt from 'jsonwebtoken';
+import jwt, { JsonWebTokenError } from 'jsonwebtoken';
 import { User } from "../../models/user";
 import { UnauthorizedError } from "../exceptions/unauthorizedError";
 import { ValidationError } from "../exceptions/validationError";
@@ -30,12 +30,16 @@ export const authenticatedMiddleware = (req: Request, res: Response, next: NextF
     );
     next();
   } catch (error) {
+    if (error instanceof JsonWebTokenError) {
+      const unauthorizedError = new UnauthorizedError('JWT Inválido');
+      return unauthorizedError.respond(res);
+    }
     if (error instanceof ValidationError ||
         error instanceof NotFoundError ||
         error instanceof UnauthorizedError) {
       return error.respond(res);
     }
-    console.log(error);
+    
     return res.status(500).send({});
   }
 }
